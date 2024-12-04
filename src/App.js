@@ -1,45 +1,59 @@
+import { useState } from "react";
 import "./index.css";
 
 const faqs = [
   {
-    title: "Where are these chairs assembled?",
-    text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusantium, quaerat temporibus quas dolore provident nisi ut aliquid ratione beatae sequi aspernatur veniam repellendus.",
+    title: "What is frontend development?",
+    text: "Frontend development involves creating the visual and interactive parts of a website or app that users directly interact with, using technologies like HTML, CSS, and JavaScript.",
   },
   {
-    title: "How long do I have to return my chair?",
-    text: "Pariatur recusandae dignissimos fuga voluptas unde optio nesciunt commodi beatae, explicabo natus.",
+    title: "What skills are essential for a frontend developer?",
+    text: "Core skills include proficiency in HTML, CSS, and JavaScript, knowledge of frameworks like React or Vue, and familiarity with tools like Git and design principles.",
   },
   {
-    title: "Do you ship to countries outside the EU?",
-    text: "Excepturi velit laborum, perspiciatis nemo perferendis reiciendis aliquam possimus dolor sed! Dolore laborum ducimus veritatis facere molestias!",
+    title: "How is frontend different from backend development?",
+    text: "Frontend focuses on the user interface and experience, while backend handles server-side logic, databases, and APIs.",
+  },
+  {
+    title: "Can I learn both frontend and backend development simultaneously?",
+    text: "Yes, it's essential to have a strong foundation in one area before moving on to the other. However, it's recommended to focus on one area and work on projects that require it.",
   },
 ];
 
 export default function App() {
   return (
     <div>
+      <h1 className="header">FAQ's</h1>
+      <p className="sub-header">FAQ's about frontend development.</p>
+
       <Accordion data={faqs} />
     </div>
   );
 }
 
-function Accordion(data) {
+function Accordion({ data }) {
   return (
     <div className="accordion">
-      {data.map((el) => (
-        <accordionItem title={el.title} text={el.text} />
+      {data.map((el, i) => (
+        <AccordionItem title={el.title} text={el.text} num={i} key={el.title} />
       ))}
     </div>
   );
 }
 
-function accordionItem(num, title, text) {
+function AccordionItem({ num, title, text }) {
+  const [isopen, setisopen] = useState(false);
+
+  function handleToggle() {
+    setisopen((isopen) => !isopen);
+  }
   return (
-    <div className="item">
-      <p className="number">{num}</p>
+    <div className={`item ${isopen ? "open" : ""}`} onClick={handleToggle}>
+      <p className="number">{num < 9 ? `0${num + 1}` : num + 1}</p>
       <p className="title">{title}</p>
-      <p className="icon">-</p>
-      <div className="content-box">{text}</div>
+      <p className="icon">{isopen ? "-" : "+"}</p>
+
+      {isopen && <div className="content-box">{text}</div>}
     </div>
   );
 }
