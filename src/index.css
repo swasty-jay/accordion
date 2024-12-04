@@ -68,6 +68,13 @@ body {
   font-weight: 500;
 }
 
+.open {
+  border-top: 5px solid #087f5b;
+}
+.open .title,
+.open .number {
+  color: #087f5b;
+}
 .icon {
   font-size: 24px;
   font-weight: 500;
